@@ -2,7 +2,6 @@ import React from 'react';
 import StackPage from 'app/module/common/StackPage';
 import {_, Style, Cache} from 'CR';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-// import {TextInput} from 'react-native';
 import { Container, View, Content, Button, Text, Form, Item, Label, Input, Row, Col, Icon, Toast} from 'native-base';
 
 const sy = Style.create({
@@ -11,7 +10,10 @@ const sy = Style.create({
     flex: 1
   },
   cont: {
-    flex: 1
+    // flex: 1,
+    paddingBottom: 30,
+    marginBottom: 0,
+    // overflow: 'hidden'
   },
   send_ared: {
     // width: '100%',
@@ -36,33 +38,42 @@ const sy = Style.create({
   },
 
   col_l: {
-    width : 50,
+    width : 60,
     // justifyContent : 'center',
     alignItems : 'center'
   },
   col_b: {
-    backgroundColor: '#00ff00',
-    paddingLeft: 12,
-    paddingRight: 12,
-    paddingTop: 5,
-    paddingBottom: 5,
-    borderRadius: 8,
+    textAlign: 'right',
   },
   col_r: {
-    width : 50,
+    width : 60,
     // justifyContent : 'center',
     alignItems : 'center'
   },
+  vt : {
+    backgroundColor: '#00ff00',
+    paddingLeft: 12,
+    paddingRight: 12,
+    paddingTop: 8,
+    paddingBottom: 8,
+    borderRadius: 8,
+    maxWidth: '100%'
+  },
+  vt1 : {
+    right: 0
+  },
   bt: {
-    width: 'auto'
+    fontSize : 14
   },
   bt1: {
+    fontSize : 14,
     
-    textAlign: 'right',
-    width: 'auto'
   },
   row: {
-    marginTop: 12
+    marginTop: 12,
+    height: 'auto',
+    paddingTop: 10,
+    paddingBottom: 10
   }
 });
 
@@ -94,8 +105,17 @@ export default class extends StackPage{
 
   renderList(){
     const list = this.props.list;
+    const p = {
+      style : sy.cont,
+      ref : 'scroll',
+      onContentSizeChange : (w, h)=>{
+        this.refs.scroll._root.scrollToEnd({
+          animated: true
+        });
+      }
+    };
     return (
-      <Content style={sy.cont}>
+      <Content {...p}>
         {
           _.map(list, (item, i)=>{
             return this.renderEachList(item, i);
@@ -112,7 +132,9 @@ export default class extends StackPage{
       return (
         <Row key={i} style={sy.row}>
           <Col style={sy.col_l}><Icon name="user-circle" type="FontAwesome" /></Col>
-          <Col style={sy.col_b}><Text style={sy.bt}>{d.content}</Text></Col>
+          <Col style={sy.col_b}>
+            <View style={sy.vt}><Text style={sy.bt}>{d.content}</Text></View>
+          </Col>
           <Col style={sy.col_r}></Col>
         </Row>
       );
@@ -121,7 +143,9 @@ export default class extends StackPage{
       return (
         <Row key={i} style={sy.row}>
           <Col style={sy.col_l}></Col>
-          <Col style={sy.col_b}><Text style={sy.bt1}>{d.content}</Text></Col>
+          <Col style={sy.col_b}>
+            <View style={[sy.vt, sy.vt1]}><Text style={sy.bt1}>{d.content}</Text></View>
+          </Col>
           <Col style={sy.col_r}><Icon name="user-circle" type="FontAwesome" /></Col>
         </Row>
       );
@@ -134,7 +158,7 @@ export default class extends StackPage{
       returnKeyType : 'send',
       // blurOnSubmit : true,
       value : this.state.text,
-      // ref : (ref)=>{this.text = ref;},
+      // ref : 'text',
       onSubmitEditing : async ()=>{
         
         try{
@@ -143,6 +167,7 @@ export default class extends StackPage{
           await this.props.sendText(info.userId, text);
           this.tmp = '';
           this.setState({text : ''});
+          
 
         }catch(e){
           Toast.show({
@@ -171,7 +196,6 @@ export default class extends StackPage{
   }
 
   componentDidMount(){
-  
     this.props.navigation.addListener('didBlur', (payload)=>{
       // remove target
       this.props.removeTarget();
@@ -181,6 +205,12 @@ export default class extends StackPage{
       // remove unread
       this.props.removeUnread(this.props.current);
     });
+
+    this.refs.scroll._root.scrollToEnd();
+  }
+
+  shouldComponentUpdate(np){
+    return true;
   }
 
   

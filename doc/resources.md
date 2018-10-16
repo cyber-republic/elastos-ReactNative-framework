@@ -15,6 +15,7 @@
 - https://github.com/elastos/Elastos.RT.SDK.Wallet.Android: Wallet SDK for Android platform
 - https://github.com/elastos/Elastos.RT.SDK.Wallet.Android/releases: Releases of Wallet SDK for Android platform
 - https://github.com/elastos/Elastos.RT/blob/master/Docs/How_To_Use_The_Wallet_Of_Elastos.RT_CN.md: How to Use the Wallet SDK for Android Platform
+- https://github.com/elastos/Elastos.ORG.Wallet.Lib.C: C lever API for Wallet. support x86 for iOS.
 
 ## Elastos ID SDK
 - https://github.com/elastos/Elastos.ELA.SPV.Cpp.ID/tree/dev: SDK for DID.

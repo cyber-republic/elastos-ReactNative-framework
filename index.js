@@ -1,8 +1,8 @@
 import {AppRegistry} from 'react-native';
 
 
-// import './dapp/carrier_demo/app';
+import './dapp/carrier_demo/app.bak';
 
-import App from './src/main';
-AppRegistry.registerComponent('ELASTOS_RN_FRAMEWORK', () => App);
+// import App from './src/main';
+// AppRegistry.registerComponent('ELASTOS_RN_FRAMEWORK', () => App);
 

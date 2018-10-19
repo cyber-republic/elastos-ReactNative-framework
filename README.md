@@ -50,56 +50,81 @@ Elastos React Native Framework requires certain package to be installed and conf
 1. Download and install XCode from the Apple App Store.
 
 2. Install Command Line Tools. Open Terminal, type (copy and paste) the following and press enter:
-      xcode-select --install
+```shell
+xcode-select --install
+```
 
 3. Install CocoPods. In Terminal, type (copy and paste) the following and press enter:
-      sudo gem install cocoapods
-      
+```shell
+sudo gem install cocoapods
+```      
+
 4. Install Homebrew. In Terminal, type (copy and paste) the following and press enter:
-      /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```shell
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
 
 5a. Install Docker. Open your web browser and go to the URL:
-      https://store.docker.com/editions/community/docker-ce-desktop-mac
-      
+```shell
+https://store.docker.com/editions/community/docker-ce-desktop-mac
+```
+
 5b. Create an account on to login to the website, download and follow the installation instructions on the download website. Once you have completed installation, login and run it.
 
 6. Install Node. In Terminal, type (copy and paste) the following and press enter:
-      brew install node
+```shell
+brew install node
+```
 
 7. Install Watchman, a tool by Facebook for watching changes in the filesystem. In Terminal, type (copy and paste) the following and press enter:
-      brew install watchman
+```shell
+brew install watchman
+```
 
 8. Install React Native Client. In Terminal, type (copy and paste) the following and press enter:
-      npm install -g react-native-cli
-      
+```shell
+npm install -g react-native-cli
+```
+
 9. On the XCode menu, click on Source Control and select Clone.. from the dropdown menu.
 
 10a. Enter the repository URL:
-  https://github.com/cyber-republic/elastos-ReactNative-framework.git
+```shell
+https://github.com/cyber-republic/elastos-ReactNative-framework.git
+```
 
 10b. Click the Clone button and select the destination you want to clone the Elastos React Native Framework to and click the Clone button.
 
 11. In Terminal, change your working directory to the location you cloned the Elastos React Native Framework.
 
 12a. Setup the environment with NativeBase by typing (copy and paste) the following into Terminal and pressing enter:
-      npm i
-      
+```shell
+npm i
+```
+
 12b. If you need, follow the instructions by typing (copy and paste), npm audit fix, into Terminal to fix any issues.
 
 13. Lets link this to React Native by typing (copy and paste) the following into Terminal and press enter:
-      react-native link
+```shell
+react-native link
+```
 
 14. We need to locate your systems IP address so in Terminal type (copy and paste) the following and press enter to locate it:
-       ifconfig
-
+```shell
+ifconfig
+```
 15a. Open the /elastos-ReactNative-framework/src/config/src/config/index.js file in Finder by right clicking and selecting open with TextEdit.
 
 15b. Change the DAPP_SERVER_URL to your local IP address, save and close the file.
 
 16. Run the local docker instance. In Terminal, type (copy and paste) the following and press enter:
-      npm run dep:start
-      
+```shell
+npm run dep:start
+```
+
 17. Install CocoPods. In Terminal, change your working directory to /elastos-ReactNative-framework/ios. Type (copy and paste) the following and press enter:
-      pod install
+```shell
+pod install
+```
 
 18. Open /elastos-ReactNative-framework/ios/ELASTOS_RN_FRAMEWORK.xcworkspace with XCode. Build and Run.

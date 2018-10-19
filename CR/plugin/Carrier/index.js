@@ -50,7 +50,7 @@ const Carrier = class {
 
     this.config = {
       name : this.id,
-      udp_enabled : true,
+      udp_enabled : false,
       bootstraps : config.bootstraps
     };
 

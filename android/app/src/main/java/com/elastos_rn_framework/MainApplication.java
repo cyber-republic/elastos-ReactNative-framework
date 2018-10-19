@@ -12,7 +12,13 @@ import com.facebook.soloader.SoLoader;
 import java.util.Arrays;
 import java.util.List;
 
+import android.content.Context;
+
+import carrier.CarrierPlugin;
+
 public class MainApplication extends Application implements ReactApplication {
+
+  private static Context mContext;
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -24,6 +30,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new CarrierPlugin(),
+
             new RNCameraPackage()
       );
     }
@@ -42,6 +50,13 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
+
+    mContext = getApplicationContext();
+
     SoLoader.init(this, /* native exopackage */ false);
+  }
+
+  public static Context getContext(){
+    return mContext;
   }
 }

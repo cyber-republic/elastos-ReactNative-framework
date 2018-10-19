@@ -26,7 +26,7 @@ class App extends Component{
         <Text style={styles.error}>{this.state.error}</Text>
 
         <Content>
-          {/* <Button style={styles.btn} success block onPress={this.testFn.bind(this, 'getVersion')}>
+          <Button style={styles.btn} success block onPress={this.testFn.bind(this, 'getVersion')}>
             <Text>getVersion</Text>
           </Button>
           <Button style={styles.btn} success block onPress={this.testFn.bind(this, 'isValidAddress')}>
@@ -40,7 +40,7 @@ class App extends Component{
           </Button>
           <Button style={styles.btn} success block onPress={this.testFn.bind(this, 'getSelfInfo')}>
             <Text>getSelfInfo</Text>
-          </Button> */}
+          </Button>
           <Button style={styles.btn} success block onPress={this.testFn.bind(this, 'addFriend')}>
             <Text>addFriend</Text>
           </Button>

@@ -144,10 +144,9 @@
   
   NSError *error = nil;
   ELACarrierSession *session = [elaSessionManager newSessionTo:friendId error:&error];
-//  NSString *peer = [session getPeer];
-//  RCTLog(@"%@", peer);
-  ELACarrierStreamOptions options = ELACarrierStreamOptionReliable;
-//  ELACarrierStreamOptionMultiplexing | ELACarrierStreamOptionPortForwarding | ELACarrierStreamOptionReliable;
+  NSString *peer = [session getPeer];
+  RCTLog(@"%@", peer);
+  ELACarrierStreamOptions options = ELACarrierStreamOptionMultiplexing | ELACarrierStreamOptionPortForwarding | ELACarrierStreamOptionReliable;
   
 //  NSError *error = nil;
    _stream = [session addStreamWithType:ELACarrierStreamTypeApplication options:options delegate:(id)self error:&error];

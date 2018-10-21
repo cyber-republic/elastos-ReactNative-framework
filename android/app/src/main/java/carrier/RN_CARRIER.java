@@ -2,7 +2,14 @@ package carrier;
 
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.WritableArray;
+import com.facebook.react.bridge.WritableMap;
+import android.support.annotation.Nullable;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import org.elastos.carrier.*;
 import org.elastos.carrier.Carrier;
@@ -18,6 +25,8 @@ import java.util.List;
 import java.util.Map;
 
 public class RN_CARRIER extends AbstractCarrierHandler {
+
+    public static ReactContext _reactContext;
 
     private Util util;
     private Carrier _carrier;
@@ -82,7 +91,22 @@ public class RN_CARRIER extends AbstractCarrierHandler {
             util.error("[carrier init] "+e.toString());
         }
 
+        _carrier.start(50);
 
+    }
+
+    @Override
+    public void onConnection(Carrier carrier, ConnectionStatus status){
+        util.log("Agent connection status changed to " + status);
+
+        sendEvent("onConnection", status.value());
+    }
+
+    @Override
+    public void onReady(Carrier carrier){
+        util.log("Elastos carrier instance is ready.");
+
+        sendEvent("onReady", "");
     }
 
 
@@ -92,6 +116,21 @@ public class RN_CARRIER extends AbstractCarrierHandler {
     }
 
 
+    public void sendEvent(String eventName, Integer params){
+        WritableArray array = Arguments.createArray();
+        array.pushInt(params);
+        _reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, array);
+    }
+    public void sendEvent(String eventName, @Nullable String params){
+        WritableArray array = Arguments.createArray();
+        array.pushString(params);
+        _reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
+    }
+    public void sendEvent(String eventName, WritableMap params){
+        WritableArray array = Arguments.createArray();
+        array.pushMap(params);
+        _reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
+    }
 
 
 }

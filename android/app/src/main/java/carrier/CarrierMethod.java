@@ -21,8 +21,11 @@ import org.elastos.carrier.*;
 import org.elastos.carrier.exceptions.CarrierException;
 import org.json.JSONObject;
 
+import com.facebook.react.bridge.LifecycleEventListener;
 
-public class CarrierMethod extends ReactContextBaseJavaModule {
+
+public class CarrierMethod extends ReactContextBaseJavaModule
+        implements LifecycleEventListener {
 
     public static final String ok = "ok";
 
@@ -33,7 +36,11 @@ public class CarrierMethod extends ReactContextBaseJavaModule {
     public CarrierMethod(ReactApplicationContext reactContext) {
         super(reactContext);
 
+        RN_CARRIER._reactContext = reactContext;
+
         util = Util.singleton();
+
+        reactContext.addLifecycleEventListener(this);
     }
 
     @ReactMethod
@@ -132,5 +139,26 @@ public class CarrierMethod extends ReactContextBaseJavaModule {
     public Carrier getInstanceByName(String name){
         RN_CARRIER _rn = getByName(name);
         return _rn.getCarrierInstance();
+    }
+
+    @Override
+    public void onHostResume() {
+        util.log("[ onHostResume ]");
+    }
+
+    @Override
+    public void onHostPause() {
+        util.log("[ onHostPause ]");
+    }
+
+    @Override
+    public void onHostDestroy() {
+        util.log("[ onHostDestroy ]");
+        for(String key : ALL_MAP.keySet()){
+            RN_CARRIER rn = ALL_MAP.get(key);
+            Carrier c = rn.getCarrierInstance();
+            c.kill();
+        }
+        util.log("destory, killed all carrier instance.");
     }
 }

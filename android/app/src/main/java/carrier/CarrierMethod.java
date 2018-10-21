@@ -24,6 +24,8 @@ import org.json.JSONObject;
 
 public class CarrierMethod extends ReactContextBaseJavaModule {
 
+    public static final String ok = "ok";
+
     private HashMap<String, RN_CARRIER> ALL_MAP = new HashMap<String, RN_CARRIER>();
     private Util util;
 
@@ -71,7 +73,7 @@ public class CarrierMethod extends ReactContextBaseJavaModule {
         RN_CARRIER _rn = new RN_CARRIER(config);
         ALL_MAP.put(name, _rn);
 
-        cb.invoke(null, "ok");
+        cb.invoke(null, ok);
     }
 
     @ReactMethod
@@ -82,6 +84,36 @@ public class CarrierMethod extends ReactContextBaseJavaModule {
             cb.invoke(null, _carrier.getAddress());
         }catch(CarrierException e){
             util.error("[getAddress] "+e.toString());
+            cb.invoke(e.toString(), null);
+        }
+    }
+
+    @ReactMethod
+    public void getSelfInfo(String name, Callback cb){
+        Carrier _carrier = getInstanceByName(name);
+        RN_CARRIER _rn = getByName(name);
+
+        try{
+            RN_UserInfo info = new RN_UserInfo(_carrier.getSelfInfo());
+            cb.invoke(null, info.toJS());
+        }catch(CarrierException e){
+            util.error("[getSelfInfo] "+e.toString());
+            cb.invoke(e.toString(), null);
+        }
+    }
+
+    @ReactMethod
+    public void setSelfInfo(String name, ReadableMap info, Callback cb){
+        HashMap map = info.toHashMap();
+        Carrier _carrier = getInstanceByName(name);
+
+        try{
+            RN_UserInfo new_info = new RN_UserInfo(_carrier.getSelfInfo());
+            new_info.extendWithHashMap(map);
+            _carrier.setSelfInfo(new_info);
+            cb.invoke(null, ok);
+        }catch(CarrierException e){
+            util.error("[setSelfInfo] "+e.toString());
             cb.invoke(e.toString(), null);
         }
     }

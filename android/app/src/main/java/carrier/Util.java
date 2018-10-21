@@ -13,6 +13,11 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.facebook.react.bridge.WritableNativeMap;
+import com.facebook.react.bridge.WritableArray;
 
 public class Util {
     private Context mContext;
@@ -78,5 +83,14 @@ public class Util {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(key, value);
         return jsonObject;
+    }
+
+    public WritableNativeMap toJsObject(HashMap<String, String> map){
+        WritableNativeMap rs = new WritableNativeMap();
+        for (String key : map.keySet()) {
+            String val = map.get(key);
+            rs.putString(key, val);
+        }
+        return rs;
     }
 }

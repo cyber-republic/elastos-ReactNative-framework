@@ -97,7 +97,7 @@ public class RN_CARRIER extends AbstractCarrierHandler {
 
     @Override
     public void onConnection(Carrier carrier, ConnectionStatus status){
-        util.log("Agent connection status changed to " + status);
+        util.log("[ onConnection ] : " + status);
 
         sendEvent("onConnection", status.value());
     }
@@ -109,6 +109,97 @@ public class RN_CARRIER extends AbstractCarrierHandler {
         sendEvent("onReady", "");
     }
 
+    @Override
+    public void onFriendConnection(Carrier carrier, String friendId, ConnectionStatus status) {
+        util.log(String.format("[ onFriendConnection ] : %s, %s", friendId, status));
+
+        WritableMap param = Arguments.createMap();
+        param.putString("friendId", friendId);
+        param.putInt("status", status.value());
+
+        sendEvent("onFriendConnection", param);
+    }
+
+    @Override
+    public void onFriendAdded(Carrier carrier, FriendInfo friendInfo) {
+        util.log(String.format("[ onFriendAdded ] : %s", friendInfo.toString()));
+
+        WritableMap param = Arguments.createMap();
+        param.putMap("friendInfo", (new RN_FriendInfo(friendInfo)).toJS());
+
+        sendEvent("onFriendAdded", param);
+    }
+
+    @Override
+    public void onFriendRemoved(Carrier carrier, String friendId) {
+        util.log("friend " + friendId + "removed");
+
+        WritableMap param = Arguments.createMap();
+        param.putString("friendId", friendId);
+
+        sendEvent("onFriendRemoved", friendId);
+    }
+
+    @Override
+    public void onFriendPresence(Carrier carrier, String friendId, PresenceStatus presence) {
+        util.log("Friend " + friendId + " presence changed to " + presence);
+
+        WritableMap param = Arguments.createMap();
+        param.putString("friendId", friendId);
+        param.putInt("presence", presence.value());
+
+        sendEvent("onFriendPresence", param);
+    }
+
+    @Override
+    public void onFriendInfoChanged(Carrier carrier, String friendId, FriendInfo friendInfo) {
+        RN_FriendInfo f_info = new RN_FriendInfo(friendInfo);
+        util.log("[ onFriendInfoChanged ] : " + friendInfo.toString());
+
+        sendEvent("onFriendInfoChanged", f_info.toJS());
+    }
+
+    @Override
+    public void onFriends(Carrier carrier, List<FriendInfo> friends) {
+        util.log("[ onFriends ] : " + friends);
+
+        WritableArray param = Arguments.createArray();
+        for(FriendInfo info: friends){
+            param.pushMap((new RN_FriendInfo(info)).toJS());
+        }
+
+        sendEvent("onFriends", param);
+    }
+
+    @Override
+    public void onFriendRequest(Carrier carrier, String userId, UserInfo userInfo, String hello){
+        util.log(String.format("[ onFriendRequest ] : %s , %s, %s", userId, userInfo.toString(), hello));
+
+        WritableMap param = Arguments.createMap();
+        param.putString("userId", userId);
+        param.putMap("userInfo", (new RN_UserInfo(userInfo)).toJS());
+        param.putString("msg", hello);
+
+        sendEvent("onFriendRequest", param);
+    }
+
+    @Override
+    public void onFriendMessage(Carrier carrier, String from, byte[] msg){
+        util.log(String.format("[ onFriendMessage ] : %s, %s", from, msg));
+
+        WritableMap param = Arguments.createMap();
+        param.putString("userId", from);
+        param.putString("message", new String(msg));
+
+        sendEvent("onFriendMessage", param);
+    }
+
+    @Override
+    public void onSelfInfoChanged(Carrier carrier, UserInfo info){
+        util.log(String.format("[ onSelfInfoChanged ] : %s", info.toString()));
+
+        sendEvent("onSelfInfoChanged", (new RN_UserInfo(info)).toJS());
+    }
 
 
     public Carrier getCarrierInstance(){
@@ -116,7 +207,7 @@ public class RN_CARRIER extends AbstractCarrierHandler {
     }
 
 
-    public void sendEvent(String eventName, Integer params){
+    public void sendEvent(String eventName, @Nullable Integer params){
         WritableArray array = Arguments.createArray();
         array.pushInt(params);
         _reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, array);
@@ -124,12 +215,17 @@ public class RN_CARRIER extends AbstractCarrierHandler {
     public void sendEvent(String eventName, @Nullable String params){
         WritableArray array = Arguments.createArray();
         array.pushString(params);
-        _reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
+        _reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, array);
     }
-    public void sendEvent(String eventName, WritableMap params){
+    public void sendEvent(String eventName, @Nullable WritableMap params){
         WritableArray array = Arguments.createArray();
         array.pushMap(params);
-        _reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
+        _reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, array);
+    }
+    public void sendEvent(String eventName, @Nullable WritableArray params){
+        WritableArray array = Arguments.createArray();
+        array.pushArray(params);
+        _reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, array);
     }
 
 

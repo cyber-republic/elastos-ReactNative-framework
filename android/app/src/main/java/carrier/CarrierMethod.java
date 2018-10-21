@@ -1,6 +1,7 @@
 package carrier;
 
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
@@ -14,14 +15,18 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+
+import android.telecom.Call;
 import android.widget.Toast;
 import java.io.File;
+import java.util.Iterator;
 
 import org.elastos.carrier.*;
 import org.elastos.carrier.exceptions.CarrierException;
 import org.json.JSONObject;
 
 import com.facebook.react.bridge.LifecycleEventListener;
+import com.facebook.react.bridge.WritableArray;
 
 
 public class CarrierMethod extends ReactContextBaseJavaModule
@@ -124,6 +129,122 @@ public class CarrierMethod extends ReactContextBaseJavaModule
             cb.invoke(e.toString(), null);
         }
     }
+
+    @ReactMethod
+    public void addFriend(String name, String address, String msg, Callback cb){
+        Carrier _carrier = getInstanceByName(name);
+
+        try{
+            _carrier.addFriend(address, msg);
+            cb.invoke(null, ok);
+        }catch(CarrierException e){
+            util.error("[addFriend] "+e.toString());
+            cb.invoke(e.toString(), null);
+        }
+    }
+
+    @ReactMethod
+    public void acceptFriend(String name, String userId, Callback cb){
+        Carrier _carrier = getInstanceByName(name);
+
+        try{
+            _carrier.acceptFriend(userId);
+            cb.invoke(null, ok);
+        }catch(CarrierException e){
+            util.error("[acceptFriend] "+e.toString());
+            cb.invoke(e.toString(), null);
+        }
+    }
+
+    @ReactMethod
+    public void getFriendInfo(String name, String friendId, Callback cb){
+        Carrier _carrier = getInstanceByName(name);
+
+        try{
+            FriendInfo f_info = _carrier.getFriend(friendId);
+            RN_FriendInfo ff = new RN_FriendInfo(f_info);
+            cb.invoke(null, ff.toJS());
+        }catch(CarrierException e){
+            util.error("[getFriendInfo] "+e.toString());
+            cb.invoke(e.toString(), null);
+        }
+    }
+
+    @ReactMethod
+    public void setLabel(String name, String friendId, String label, Callback cb){
+        Carrier _carrier = getInstanceByName(name);
+
+        try{
+            _carrier.labelFriend(friendId, label);
+            cb.invoke(null, ok);
+        }catch(CarrierException e){
+            util.error("[setLabel] "+e.toString());
+            cb.invoke(e.toString(), null);
+        }
+    }
+
+    @ReactMethod
+    public void getFriendList(String name, Callback cb){
+        Carrier _carrier = getInstanceByName(name);
+
+        try{
+            List<FriendInfo> list = _carrier.getFriends();
+            WritableArray fl = Arguments.createArray();
+
+            Iterator<FriendInfo> iterator = list.iterator();
+            while(iterator.hasNext()){
+                FriendInfo tmp = iterator.next();
+                fl.pushMap((new RN_FriendInfo(tmp)).toJS());
+            }
+
+            cb.invoke(null, fl);
+        }catch(CarrierException e){
+            util.error("[getFriendList] "+e.toString());
+            cb.invoke(e.toString(), null);
+        }
+    }
+
+    @ReactMethod
+    public void sendFriendMessageTo(String name, String userId, String msg, Callback cb){
+        Carrier _carrier = getInstanceByName(name);
+
+        try{
+            _carrier.sendFriendMessage(userId, msg);
+            cb.invoke(null, ok);
+        }catch(CarrierException e){
+            util.error("[sendFriendMessageTo] "+e.toString());
+            cb.invoke(e.toString(), null);
+        }
+    }
+
+    @ReactMethod
+    public void removeFriend(String name, String userId, Callback cb){
+        Carrier _carrier = getInstanceByName(name);
+
+        try{
+            _carrier.removeFriend(userId);
+            cb.invoke(null, ok);
+        }catch(CarrierException e){
+            util.error("[removeFriend] "+e.toString());
+            cb.invoke(e.toString(), null);
+        }
+    }
+
+    @ReactMethod
+    public void close(String name){
+        Carrier _carrier = getInstanceByName(name);
+
+        _carrier.kill();
+    }
+
+    @ReactMethod
+    public void clean(String name){
+        Carrier _carrier = getInstanceByName(name);
+
+
+    }
+
+
 
 
 

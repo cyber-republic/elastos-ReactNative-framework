@@ -1,4 +1,4 @@
-import initStore from './store';
+import {initStore, RootNavigator} from './store';
 import {Log, Cache, Error} from 'app/lib';
 // import ReducerType from './store/constant';
 import action from './store/action';
@@ -7,6 +7,7 @@ import method from './method';
 
 const F = {
 	init(){
+		F.RootNavigator = RootNavigator;
 		F.store = initStore();
 		F.dispatch = F.store.dispatch;
 		// F.redux = {
@@ -21,8 +22,7 @@ const F = {
 			const key = args[0];
 			const fn = _.get(Cache.method['METHOD'], '_dm-method_.'+key, null);
 			if(!fn){
-				Error.create(`dm.method.${key} is not a valid method name`);
-				return false;
+				throw (`dm.method.${key} is not a valid method name`);
 			}
 
 	    return await fn.apply(null, _.slice(args, 1));

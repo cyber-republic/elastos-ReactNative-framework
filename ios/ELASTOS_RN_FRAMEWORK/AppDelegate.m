@@ -59,11 +59,11 @@ NSDictionary *_launchOptions;
                                       launchOptions:_launchOptions];
   
   UIButton *button = [[UIButton alloc]init];
-  [button setTitle:@"Close" forState:UIControlStateNormal];
+  [button setTitle:@"close" forState:UIControlStateNormal];
   [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   [button setBackgroundColor:[UIColor yellowColor]];
 
-  button.frame = CGRectMake(self.window.bounds.size.width-80, 22, 80, 40);
+  button.frame = CGRectMake(self.window.bounds.size.width-120, 60, 60, 24);
   [button addTarget:self action:@selector(backToMain) forControlEvents:UIControlEventTouchUpInside];
   [view addSubview:button];
   

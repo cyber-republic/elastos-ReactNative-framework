@@ -53,7 +53,7 @@
   RCTAssert(self.executorClass || self->_jsThread == [NSThread currentThread], \
             @"This method must be called on JS thread")
 
-static NSString *const RCTJSThreadName = @"com.elastos.Trinity";
+static NSString *const RCTJSThreadName = @"RN_JAVASCRIPT_SIDE";
 
 typedef void (^RCTPendingCall)();
 

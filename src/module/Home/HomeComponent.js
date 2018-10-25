@@ -2,7 +2,12 @@ import React from 'react';
 import BasePage from '../common/BasePage';
 import {Cache} from 'app/lib';
 import {_, Style} from 'CR';
+<<<<<<< HEAD
 import {NativeModules} from 'react-native';
+=======
+import InstallAppPage from 'app/module/InstallApp/Container';
+
+>>>>>>> a0228f87777d966a70aebaa55cb3baccd1114e4f
 import { Container, Header, Content, Button, Text, Grid, Row, Col, View, Thumbnail} from 'native-base';
 
 var IosWallet = NativeModules.testWallet;
@@ -124,7 +129,9 @@ export default class extends BasePage{
   }
 
   toInstallPage(){
-    Cache.method.call('goPath', 'install_app', 'modal');
+    Cache.method.call('modal', 'open', {
+      child : InstallAppPage
+    })
   }
 
   testWalletResult(){

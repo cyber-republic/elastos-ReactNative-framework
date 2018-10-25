@@ -10,10 +10,13 @@ export default class extends ModalPage{
       <Content>
         <List>
           <ListItem onPress={this.clickItem.bind(this, 'example')}>
-              <Text>NativeBase example</Text>
+            <Text>NativeBase example</Text>
           </ListItem>
           <ListItem>
-              <Text onPress={this.clickItem.bind(this, 'test')}>Http example</Text>
+            <Text onPress={this.clickItem.bind(this, 'test')}>Http example</Text>
+          </ListItem>
+          <ListItem>
+            <Text onPress={this.clickItem.bind(this, 'carrier_demo')}>Carrier DEMO</Text>
           </ListItem>
         </List>
       </Content>

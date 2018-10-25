@@ -9,7 +9,7 @@ export default class extends BasePage{
     return (
       <Right>
         <Button transparent onPress={this.close.bind(this)}>
-          <Icon name='close' />
+          <Icon name='close' type="FontAwesome" />
         </Button>
       </Right>
     );

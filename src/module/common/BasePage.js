@@ -5,7 +5,7 @@ import Loading from './Loading';
 
 const style = CR.Style.create({
   box : {
-    backgroundColor: '#f9f9f9'
+    
   },
   header : {
     backgroundColor: '#43af92',
@@ -16,7 +16,7 @@ const style = CR.Style.create({
     color : '#333'
   },
   main : {
-
+    backgroundColor: '#f9f9f9'
   }
 });
 
@@ -24,7 +24,6 @@ const style = CR.Style.create({
 export default class extends React.Component{
   constructor(p){
     super(p);
-
     this.ord_init();
   }
 
@@ -40,7 +39,8 @@ export default class extends React.Component{
         {this.ord_renderHeader(header_props)}
 
         <Container style={style.main}>
-          {this.ord_checkLoading() ? this.ord_renderLoading() : this.ord_renderMain()}
+          {this.ord_renderMain()}
+          {this.ord_checkLoading() ? this.ord_renderLoading() : null}
         </Container>
 
         {this.ord_renderFooter()}
@@ -107,4 +107,17 @@ export default class extends React.Component{
   }
 
   ord_init(){}
+
+  goPath(name, type='push', params={}){
+    if(!this.props.navigation){
+      throw 'this page was not under react-navigation, please check.';
+    }
+    if(!this.props.navigation[type]){
+      throw 'invalid type : '+type;
+    }
+    this.props.navigation[type](name, params);
+  }
+  goBack(){
+    this.goPath(null, 'pop');
+  }
 }

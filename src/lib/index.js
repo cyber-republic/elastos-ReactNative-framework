@@ -1,25 +1,12 @@
-import { connect } from 'react-redux';
-import {_} from 'CR';
+import {_, util, Cache} from 'CR';
 
 import Error from './Error';
 import Log from './Log';
-import Cache from './Cache';
+// import Cache from './Cache';
 import _uuid from 'uuid';
 
-const constants = (moduleName, namespace, constants) => {
-  return Object.freeze(
-    constants.reduce((obj, constant) => {
-      return {
-        ...obj,
-        [constant]: `${moduleName}/${namespace}/${constant}`
-      };
-    }, {})
-  );
-};
-
-const createContainer = (container, mapState, mapDispatch)=>{
-  return connect(mapState, mapDispatch)(container);
-};
+const constants = util.constants; 
+const createContainer = util.createContainer;
 
 
 const uuid = ()=>{

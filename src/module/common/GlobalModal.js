@@ -12,7 +12,8 @@ export default class extends React.Component{
   defaultState(){
     return {
       show : false,
-      child : null
+      child : null,
+      prop : {}
     };
   }
   render(){
@@ -24,7 +25,7 @@ export default class extends React.Component{
         visible={this.state.show}
         onRequestClose={()=>{}}
       >
-        {this.state.child && React.createElement(this.state.child)}
+        {this.state.child && React.createElement(this.state.child, this.state.prop)}
       </Modal>
     );
   }
@@ -38,7 +39,8 @@ export default class extends React.Component{
     this.animation = opt.animation;
     this.setState({
       show : true,
-      child : opt.child || defaultChild
+      child : opt.child || defaultChild,
+      prop : opts.prop || {}
     });
   }
   close(){

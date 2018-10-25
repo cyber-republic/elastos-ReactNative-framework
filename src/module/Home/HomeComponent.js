@@ -2,10 +2,12 @@ import React from 'react';
 import BasePage from '../common/BasePage';
 import {Cache} from 'app/lib';
 import {_, Style} from 'CR';
+import {NativeModules} from 'react-native';
 import InstallAppPage from 'app/module/InstallApp/Container';
 
 import { Container, Header, Content, Button, Text, Grid, Row, Col, View, Thumbnail} from 'native-base';
 
+var IosWallet = NativeModules.testWallet;
 const sy = Style.create({
   add_box: {
     marginTop : 20
@@ -19,14 +21,24 @@ const sy = Style.create({
     flex : 1,
     alignItems : 'center',
     justifyContent : 'center'
-    
-  }
+
+    },
+    walletButton : {
+        textAlign : 'center',
+        flex : 1,
+        alignItems : 'center',
+        justifyContent : 'center',
+        marginTop: 100,
+        height:50,
+        backgroundColor: 'red'
+    }
 })
 
 export default class extends BasePage{
   ord_init(){
     this.state = {
-      loading : true
+      loading : true,
+      mnemonic : ""
     };
   }
   ord_renderMain(){
@@ -91,6 +103,24 @@ export default class extends BasePage{
         <Button block success onPress={this.toInstallPage.bind(this)}>
           <Text> Add New DApp </Text>
         </Button>
+        <Button style={sy.walletButton} onPress={ () => {this.testWalletResult()} }>
+          <Text> Generate Wallet </Text>
+        </Button>
+        {this.state.mnemonic == "" ?
+            <View>
+            </View>
+            :
+            <View>
+                <Text> {'\n'}{'\n'}MNEMONIC </Text>
+                <Text> {this.state.mnemonic} </Text>
+                <Text> {'\n'}{'\n'}PUBLIC KEY </Text>
+                <Text> {this.state.publickey} </Text>
+                <Text> {'\n'}{'\n'}PRIVATE KEY </Text>
+                <Text> {this.state.privatekey} </Text>
+            </View>
+
+        }
+
       </View>
     );
   }
@@ -99,6 +129,12 @@ export default class extends BasePage{
     Cache.method.call('modal', 'open', {
       child : InstallAppPage
     })
+  }
+
+  testWalletResult(){
+      console.log("WALLET CPP FROM IOS")
+      IosWallet.testWalletIos((error, mnemonic, publickey, privatekey) => { this.setState({mnemonic: mnemonic, publickey: publickey, privatekey : privatekey}) } )
+    // Cache.method.call('goPath', 'install_app', 'modal');
   }
 
   async componentDidMount(){

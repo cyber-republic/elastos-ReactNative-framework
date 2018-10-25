@@ -48,6 +48,9 @@
 		3F980D85853EBC53B7399F49 /* libPods-ELASTOS_RN_FRAMEWORK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFDCF23F4179850D9C0B85F7 /* libPods-ELASTOS_RN_FRAMEWORK.a */; };
 		5CFF6E81D6CB462D9C7FE252 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6FC4D439815D4FD3A2FF3EFA /* Entypo.ttf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
+		6950A5F22181A4DE0029C996 /* libElastos.Wallet.Utility.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6950A5CC2181A4DE0029C996 /* libElastos.Wallet.Utility.dylib */; };
+		6950A5F42181A4F30029C996 /* libElastos.Wallet.Utility.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6950A5F32181A4F30029C996 /* libElastos.Wallet.Utility.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		6950A5F62181A5630029C996 /* testWallet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6950A5F52181A5630029C996 /* testWallet.mm */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		A2D79FB5029D4408AF93A6C1 /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0FE202B57F7A40DB8B5FABE1 /* rubicon-icon-font.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
@@ -344,6 +347,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				6950A5F42181A4F30029C996 /* libElastos.Wallet.Utility.dylib in CopyFiles */,
 				394122B72158CD94005D69C4 /* ElastosCarrier.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,6 +397,10 @@
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		647D56E471FD4A3FAAB166C9 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		66242055C63446E4943C7865 /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
+		6950A5CC2181A4DE0029C996 /* libElastos.Wallet.Utility.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libElastos.Wallet.Utility.dylib; path = ../../Elastos.ORG.Wallet.Lib.C/build/ios/src/libElastos.Wallet.Utility.dylib; sourceTree = "<group>"; };
+		6950A5F32181A4F30029C996 /* libElastos.Wallet.Utility.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libElastos.Wallet.Utility.dylib; sourceTree = "<group>"; };
+		6950A5F52181A5630029C996 /* testWallet.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = testWallet.mm; sourceTree = "<group>"; };
+		6950A5F72181A57D0029C996 /* testWallet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = testWallet.h; sourceTree = "<group>"; };
 		6FC4D439815D4FD3A2FF3EFA /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -435,6 +443,7 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				3F980D85853EBC53B7399F49 /* libPods-ELASTOS_RN_FRAMEWORK.a in Frameworks */,
+				6950A5F22181A4DE0029C996 /* libElastos.Wallet.Utility.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -559,6 +568,8 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				39A8D59021517ED100819ED6 /* Util.h */,
 				39A8D59121517ED100819ED6 /* Util.m */,
+				6950A5F72181A57D0029C996 /* testWallet.h */,
+				6950A5F52181A5630029C996 /* testWallet.mm */,
 			);
 			name = ELASTOS_RN_FRAMEWORK;
 			sourceTree = "<group>";
@@ -589,6 +600,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6950A5CC2181A4DE0029C996 /* libElastos.Wallet.Utility.dylib */,
 				394122B22158CD4A005D69C4 /* ElastosCarrier.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				DFDCF23F4179850D9C0B85F7 /* libPods-ELASTOS_RN_FRAMEWORK.a */,
@@ -676,6 +688,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				6950A5F32181A4F30029C996 /* libElastos.Wallet.Utility.dylib */,
 				13B07FAE1A68108700A75B9A /* ELASTOS_RN_FRAMEWORK */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ELASTOS_RN_FRAMEWORKTests */,
@@ -821,7 +834,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 8L8LMD58RP;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 940;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1283,6 +1296,7 @@
 				3941233F215A374F005D69C4 /* Carrier.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				6950A5F62181A5630029C996 /* testWallet.mm in Sources */,
 				39A8D59221517ED100819ED6 /* Util.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1390,10 +1404,16 @@
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
 					"\"${SRCROOT}\"/**",
+					"/Users/abilican/Documents/projects/perso/elastos/Elastos.ORG.Wallet.Lib.C/src/**",
 				);
 				INFOPLIST_FILE = ELASTOS_RN_FRAMEWORK/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking\"",
+					/Users/abilican/Documents/projects/perso/elastos/Elastos.ORG.Wallet.Lib.C/build/ios/src,
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1426,10 +1446,16 @@
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
 					"\"${SRCROOT}\"/**",
+					"/Users/abilican/Documents/projects/perso/elastos/Elastos.ORG.Wallet.Lib.C/src/**",
 				);
 				INFOPLIST_FILE = ELASTOS_RN_FRAMEWORK/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking\"",
+					/Users/abilican/Documents/projects/perso/elastos/Elastos.ORG.Wallet.Lib.C/build/ios/src,
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

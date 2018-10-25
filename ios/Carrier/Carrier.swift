@@ -1,5 +1,5 @@
 import Foundation
-import ElastosCarrier
+//import ElastosCarrier
 
 //
 //class Test{

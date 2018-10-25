@@ -356,12 +356,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-<<<<<<< HEAD
 				6950A5F42181A4F30029C996 /* libElastos.Wallet.Utility.dylib in CopyFiles */,
-				394122B72158CD94005D69C4 /* ElastosCarrier.framework in CopyFiles */,
-=======
 				394123E2215B701F005D69C4 /* ElastosCarrier.framework in Embed Frameworks */,
->>>>>>> a0228f87777d966a70aebaa55cb3baccd1114e4f
+
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -620,15 +617,11 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				6950A5CC2181A4DE0029C996 /* libElastos.Wallet.Utility.dylib */,
-				394122B22158CD4A005D69C4 /* ElastosCarrier.framework */,
-=======
 				39E703B7216EBDCF00CD2A8E /* libcrystal.dylib */,
 				39E70390216EBDCF00CD2A8E /* libelacarrier.dylib */,
 				39E703B8216EBDCF00CD2A8E /* libelasession.dylib */,
 				394123DF215B6F8C005D69C4 /* ElastosCarrier.framework */,
->>>>>>> a0228f87777d966a70aebaa55cb3baccd1114e4f
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				DFDCF23F4179850D9C0B85F7 /* libPods-ELASTOS_RN_FRAMEWORK.a */,
 			);
@@ -1449,12 +1442,9 @@
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
-<<<<<<< HEAD
 					"\"${SRCROOT}\"/**",
 					"/Users/abilican/Documents/projects/perso/elastos/Elastos.ORG.Wallet.Lib.C/src/**",
-=======
 					"\"${SRCROOT}/Frameworks\"/**",
->>>>>>> a0228f87777d966a70aebaa55cb3baccd1114e4f
 				);
 				INFOPLIST_FILE = ELASTOS_RN_FRAMEWORK/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1462,11 +1452,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking\"",
-<<<<<<< HEAD
 					/Users/abilican/Documents/projects/perso/elastos/Elastos.ORG.Wallet.Lib.C/build/ios/src,
-=======
 					"$(PROJECT_DIR)/ElastosCarrier.framework/Frameworks",
->>>>>>> a0228f87777d966a70aebaa55cb3baccd1114e4f
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1500,12 +1487,9 @@
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
-<<<<<<< HEAD
 					"\"${SRCROOT}\"/**",
 					"/Users/abilican/Documents/projects/perso/elastos/Elastos.ORG.Wallet.Lib.C/src/**",
-=======
 					"\"${SRCROOT}/Frameworks\"/**",
->>>>>>> a0228f87777d966a70aebaa55cb3baccd1114e4f
 				);
 				INFOPLIST_FILE = ELASTOS_RN_FRAMEWORK/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1513,11 +1497,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking\"",
-<<<<<<< HEAD
 					/Users/abilican/Documents/projects/perso/elastos/Elastos.ORG.Wallet.Lib.C/build/ios/src,
-=======
 					"$(PROJECT_DIR)/ElastosCarrier.framework/Frameworks",
->>>>>>> a0228f87777d966a70aebaa55cb3baccd1114e4f
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",

@@ -1,0 +1,16 @@
+{
+  "buildFiles": [
+    "/Volumes/Dev/share_mac/workspace/BLOCKCHAIN/Elastos/elastos-ReactNative-framework/android/lib/CMakeLists.txt"
+  ],
+  "cleanCommands": [
+    "/Users/dev/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /Volumes/Dev/share_mac/workspace/BLOCKCHAIN/Elastos/elastos-ReactNative-framework/android/lib/.externalNativeBuild/cmake/release/armeabi-v7a --target clean"
+  ],
+  "libraries": {
+    "Elastos.Wallet.Lib.Jni-Release-armeabi-v7a": {
+      "artifactName": "Elastos.Wallet.Lib.Jni",
+      "buildCommand": "/Users/dev/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /Volumes/Dev/share_mac/workspace/BLOCKCHAIN/Elastos/elastos-ReactNative-framework/android/lib/.externalNativeBuild/cmake/release/armeabi-v7a --target Elastos.Wallet.Lib.Jni",
+      "abi": "armeabi-v7a",
+      "output": "/Volumes/Dev/share_mac/workspace/BLOCKCHAIN/Elastos/elastos-ReactNative-framework/android/lib/build/intermediates/cmake/release/obj/armeabi-v7a/libElastos.Wallet.Lib.Jni.so"
+    }
+  }
+}

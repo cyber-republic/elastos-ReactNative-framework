@@ -38,7 +38,7 @@ export default class extends StackPage{
         {_.map(['name', 'email', 'description', 'phone', 'gender', 'region'], (key, i)=>{
           this.param[key] = profile[key] || '';
           const p = {
-            value : this.param[key],
+            defaultValue : this.param[key],
             onChangeText : (t)=>{
               this.param[key] = t;
             }

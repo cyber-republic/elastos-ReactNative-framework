@@ -157,7 +157,7 @@ export default class extends StackPage{
     const p = {
       returnKeyType : 'send',
       // blurOnSubmit : true,
-      value : this.state.text,
+      defaultValue : this.state.text,
       // ref : 'text',
       onSubmitEditing : async ()=>{
         

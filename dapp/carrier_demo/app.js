@@ -18,7 +18,7 @@ const App = class extends React.Component{
 			<Provider store={dm.store}>
 				<Root>
 					<StatusBar
-						backgroundColor="blue"
+						backgroundColor="#eee"
 						barStyle="default"
 					/>
 	

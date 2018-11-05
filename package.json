@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build:dapp": "node ./shell/build_dapp.js",
+    "android": "react-native run-android",
     "dep:start": "docker-compose -f ./docker/docker-compose.yml up -d",
     "dep:stop": "docker-compose -f ./docker/docker-compose.yml down"
   },

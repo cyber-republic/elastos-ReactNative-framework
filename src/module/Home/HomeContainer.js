@@ -9,7 +9,7 @@ export default createContainer(HomeComponent, (state)=>{
 }, ()=>{
   return {
     async getDAppList(){
-      await dm.method.dapp.list();
+      //await dm.method.dapp.list();
     },
     async loadDapp(url){
       await dm.method.dapp.loadByUrl(url);

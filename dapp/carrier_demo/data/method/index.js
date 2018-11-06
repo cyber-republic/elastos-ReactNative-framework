@@ -1,4 +1,4 @@
-import {plugin} from 'CR';
+import {plugin, _} from 'CR';
 import me from './me';
 import friends from './friends';
 import messgae from './message';

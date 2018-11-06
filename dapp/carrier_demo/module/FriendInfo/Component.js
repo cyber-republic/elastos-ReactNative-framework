@@ -61,7 +61,7 @@ export default class extends Parent{
         {_.map(['label'], (key, i)=>{
           this.param[key] = info.label || '';
           const p = {
-            value : this.param[key],
+            defaultValue : this.param[key],
             onChangeText : (t)=>{
               this.param[key] = t;
             }

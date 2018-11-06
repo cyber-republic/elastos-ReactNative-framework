@@ -1,5 +1,5 @@
 import {initStore, RootNavigator} from './store';
-import {Cache} from 'CR';
+import {Cache, _} from 'CR';
 // import ReducerType from './store/constant';
 import action from './store/action';
 

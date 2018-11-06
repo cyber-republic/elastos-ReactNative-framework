@@ -47,7 +47,7 @@ const Page = class extends BasePage{
         </Left>
         <Body>
           <Text>{name}</Text>
-          <Text note>{data.content}</Text>
+          <Text note>{data.content.length > 10 ? data.content.substr(0, 10)+'...':data.content}</Text>
         </Body>
         <Right>
           <Text note>{time}</Text>

@@ -96,7 +96,7 @@ export default class extends Parent{
         {_.map(['address', 'message'], (key, i)=>{
           // this.param[key] = '';
           const p = {
-            value : this.param[key],
+            defaultValue : this.param[key],
             onChangeText : (t)=>{
               this.param[key] = t;
             }
@@ -124,6 +124,7 @@ export default class extends Parent{
 
   async addFriend(){
     const {address, message} = this.param;
+    console.log(111, address, message)
     if(!address || !message){
       Toast.show({
         text : 'invalid address or message',

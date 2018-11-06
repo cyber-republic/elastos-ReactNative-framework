@@ -1,6 +1,7 @@
 import React from 'react';
 import {Modal, View} from 'react-native';
 import {Cache} from 'app/lib';
+import {_} from 'CR';
 
 export default class extends React.Component{
   constructor(p){

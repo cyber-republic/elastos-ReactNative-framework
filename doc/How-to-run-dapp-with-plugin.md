@@ -1,15 +1,15 @@
-# How to run dapps with plugin
-[templary verison]
+# How to run dapps with plugin (Temporary Version)
+
 
 ## Code structure
-[./structure.md]
+[Code Structure](./structure.md)
 
 ## Run your dapp
 
-### Put your dapp code under /dapp
+#### Put your dapp code under /dapp
 Just like carrier_demo, put your whole dapp code here.
 
-### change entrance file
+#### change entrance file
 
 ```
 import {AppRegistry} from 'react-native';

@@ -18,6 +18,7 @@
   
   ELACarrierSessionManager *elaSessionManager;
   ELACarrierStream *_stream;
+  ELACarrierStreamState _state;
   
   dispatch_queue_t managerCarrierQueue;
   CarrierSendEvent _callback;
@@ -37,6 +38,7 @@
 - (instancetype)init {
   if (self = [super init]) {
     _init = NO;
+    _state = 0;
     connectStatus = ELACarrierConnectionStatusDisconnected;
     managerCarrierQueue = dispatch_queue_create("managerCarrierQueue", NULL);
     [ELACarrier setLogLevel:ELACarrierLogLevelDebug];
@@ -139,17 +141,20 @@
   connectStatus = ELACarrierConnectionStatusDisconnected;
 }
 
--(ELACarrierSession *) createNewSession: (NSString *)name friendId:(NSString *)friendId{
+-(ELACarrierSession *) createNewSession: (NSString *)name friendId:(NSString *)friendid{
   elaSessionManager = [ELACarrierSessionManager getInstance:[self getIntance] error:nil];
   
   NSError *error = nil;
-  ELACarrierSession *session = [elaSessionManager newSessionTo:friendId error:&error];
+  ELACarrierSession *session = [elaSessionManager newSessionTo:@"6XwWqntxZFwa6XmAtSmJLNZbrL9VwbsMr8GDMxKAUPmy" error:&error];
   NSString *peer = [session getPeer];
   RCTLog(@"%@", peer);
   ELACarrierStreamOptions options = ELACarrierStreamOptionMultiplexing | ELACarrierStreamOptionPortForwarding | ELACarrierStreamOptionReliable;
   
 //  NSError *error = nil;
-   _stream = [session addStreamWithType:ELACarrierStreamTypeApplication options:options delegate:(id)self error:&error];
+  if(_stream == nil){
+    _stream = [session addStreamWithType:ELACarrierStreamTypeApplication options:options delegate:(id)self error:&error];
+  }
+  
   
 //  [session sendInviteRequestWithResponseHandler:
 //   ^(ELACarrierSession *session, NSInteger status, NSString *reason, NSString *sdp) {
@@ -173,6 +178,13 @@
 #pragma mark - ELACarrierStreamDelegate
 -(void) carrierStream:(ELACarrierStream *)stream stateDidChange:(enum ELACarrierStreamState)newState{
   RCTLog(@"Stream state: %d", (int)newState);
+  
+  if (stream != _stream || _state < 0) {
+    return;
+  }
+  
+  _state = newState;
+
   
   switch (newState) {
     case ELACarrierStreamStateInitialized:

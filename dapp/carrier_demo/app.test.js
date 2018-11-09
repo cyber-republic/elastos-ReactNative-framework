@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {AppRegistry, StyleSheet, View, Image, ActionSheetIOS, NativeModules} from 'react-native';
+import {AppRegistry, StyleSheet, View, Image, ActionSheetIOS, NativeModules, AlertIOS} from 'react-native';
 import { Container, Header, Content, Footer, FooterTab, Button, Text } from 'native-base';
 
 import dapp from '../shared/dapp';
@@ -66,6 +66,14 @@ class App extends Component{
     );
   }
 
+  async openPrompt(title, message=''){
+    return new Promise((resolve, reject)=>{
+      AlertIOS.prompt(title, message, (value)=>{
+        resolve(value);
+      });
+    });
+  }
+
   async testFn(name){
     let rs = null;
     let tmp = '';
@@ -74,7 +82,9 @@ class App extends Component{
         rs = await Carrier.getVersion();
         break;
       case 'isValidAddress':
-        rs = await Carrier.isValidAddress('aaabbb');
+        tmp = await this.openPrompt('Enter an address');
+        rs = await Carrier.isValidAddress(tmp);
+        rs = tmp + ' is a valid address => '+rs.toString();
         break;
       case 'getAddress':
         rs = await this.carrier.getAddress();

@@ -1,10 +1,10 @@
 ## code structure
 
 ### /src
-base code
+RN app code. only for RN warpper app. 
 
 ### /dapp 
-dapp code
+Dapp code here.
 
-### /dapp/shared
-dapp share folder. put share code in it.
+### /CR
+Shared libs for dapp. include plugin and utility. dapp could use it as libs.

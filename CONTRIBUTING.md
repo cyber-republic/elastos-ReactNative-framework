@@ -25,10 +25,6 @@ These are guidelines, not rules. So use your best judgement because some guideli
 > **Note:** Please don't file an issue to ask a question. You'll get faster results by using the resources below.
 
  * Join [react-native-development](https://discord.gg/CSfy4YJ) channel in Discord for development questions.
- * Join [Elastos Community Telegram](https://t.me/elastosgroup) for general questions
-    * Even though Telegram is a chat service, sometimes it takes several hours for community members to respond &mdash; please be patient!
- * Join [Elastos Developers Telegram](https://t.me/elastosdev) for more technical questions
-    * Core Developers are not usually watching this channel. If you need to contact core team, please use Github.
  * Create an issue with question in [elastos-ReactNative-framework](https://github.com/cyber-republic/elastos-ReactNative-framework) for direct questions to team.
 
 ## How Can I Contribute?
@@ -44,8 +40,9 @@ Before reporting bug, please perform basic troubleshooting steps:
 * Make sure you’re on the latest version. If you’re not on the most recent version, your problem may have been solved already! Upgrading is always the best first step.
 * Try older versions. If you’re already on the latest release, try rolling back a few minor versions (e.g. if on 1.7, try 1.5 or 1.6) and see if the problem goes away. This will help the devs narrow down when the problem first arose in the commit log.
 * Try switching up dependency versions. If the software in question has dependencies (other libraries, etc) try upgrading/downgrading those as well.
-* Determine [which repository the enhancement should be suggested in](https://github.com/elastos/Elastos) - this repository is dependent on other Elastos repositories.
+* Determine [which repository the enhancement should be suggested in](https://github.com/elastos) - this repository is dependent on other Elastos repositories.
 * Search the repository issues to make sure it’s not a known issue.
+* If you report a bug in any of the repositories at https://github.com/elastos, be sure to also create a github issue under https://github.com/cyber-republic/elastos-ReactNative-framework so the RN team is also aware that the issue has been created already.
 
 If you don’t find a pre-existing bug, consider checking with the [Discord](https://discord.gg/CSfy4YJ) channel in case the problem is non-bug-related.
 

@@ -144,6 +144,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-camera')
     implementation fileTree(include: '*.jar', dir: 'libs')
 
     implementation project(':react-native-camera')

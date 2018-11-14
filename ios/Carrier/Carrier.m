@@ -41,7 +41,7 @@
     _state = 0;
     connectStatus = ELACarrierConnectionStatusDisconnected;
     managerCarrierQueue = dispatch_queue_create("managerCarrierQueue", NULL);
-    [ELACarrier setLogLevel:ELACarrierLogLevelDebug];
+    [ELACarrier setLogLevel: ELACarrierLogLevelDebug];
     
   }
   return self;
@@ -143,9 +143,10 @@
 
 -(ELACarrierSession *) createNewSession: (NSString *)name friendId:(NSString *)friendid{
   elaSessionManager = [ELACarrierSessionManager getInstance:[self getIntance] error:nil];
-  
+//  elaSessionManager = [ELACarrierSessionManager getInstance];
   NSError *error = nil;
-  ELACarrierSession *session = [elaSessionManager newSessionTo:@"6XwWqntxZFwa6XmAtSmJLNZbrL9VwbsMr8GDMxKAUPmy" error:&error];
+  ELACarrierSession *session = [elaSessionManager newSessionTo:friendid error:&error];
+  
   NSString *peer = [session getPeer];
   RCTLog(@"%@", peer);
   ELACarrierStreamOptions options = ELACarrierStreamOptionMultiplexing | ELACarrierStreamOptionPortForwarding | ELACarrierStreamOptionReliable;
@@ -154,7 +155,6 @@
   if(_stream == nil){
     _stream = [session addStreamWithType:ELACarrierStreamTypeApplication options:options delegate:(id)self error:&error];
   }
-  
   
 //  [session sendInviteRequestWithResponseHandler:
 //   ^(ELACarrierSession *session, NSInteger status, NSString *reason, NSString *sdp) {

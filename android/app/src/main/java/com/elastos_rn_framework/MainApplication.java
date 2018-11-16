@@ -3,6 +3,9 @@ package com.elastos_rn_framework;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.elastos.Carrier.RNCarrierPackage;
+
+
 import org.reactnative.camera.RNCameraPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -14,7 +17,6 @@ import java.util.List;
 
 import android.content.Context;
 
-import carrier.CarrierPlugin;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -30,9 +32,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new CarrierPlugin(),
+            new RNCarrierPackage(),
 
-            new RNCameraPackage()
+
+              new RNCameraPackage()
       );
     }
 

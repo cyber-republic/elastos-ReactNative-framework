@@ -1,6 +1,6 @@
 import {_, moment, IHStyle, util} from './util';
 import Cache from './Cache';
-import Carrier from './plugin/Carrier';
+import {Carrier} from 'react-native-elastos-carrier';
 import QRCode from 'react-native-qrcode';
 import { RNCamera } from 'react-native-camera';
 
@@ -14,7 +14,7 @@ const init = (param)=>{
 
 	IHStyle.build(_.merge({}, param.themeStyle));
 };
-
+console.log(111, Carrier);
 const plugin = {
 	Carrier,
 	QRCode, // https://github.com/cssivision/react-native-qrcode,

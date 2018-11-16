@@ -23,8 +23,7 @@
     "react-navigation-redux-helpers": "^2.0.6",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
-    "redux-thunk": "^2.3.0",
-    "react-native-elastos-carrier": "git+https://github.com/cyber-republic/react-native-elastos-carrier.git"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "babel-eslint": "7.2.3",

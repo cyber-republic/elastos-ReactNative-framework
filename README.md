@@ -1,3 +1,8 @@
+# DISCLAIMER
+* This repository is not used for the Alpha release and hence no code should be committed to this repo except the docs themselves
+* Please refer to https://github.com/cyber-republic/react-native-elastos-carrier for Elastos Carrier
+* Please refer to https://github.com/cyber-republic/react-native-elastos-wallet-core for Elastos Wallet + DID
+
 # Elastos-ReactNative-Framework
 Parallel to the Trinity Browser, this is the Elastos DApp framework implementation on React Native.
 

@@ -41,6 +41,8 @@
 		3941233F215A374F005D69C4 /* Carrier.m in Sources */ = {isa = PBXBuildFile; fileRef = 3941233E215A374F005D69C4 /* Carrier.m */; };
 		394123E6215BB30B005D69C4 /* CarrierPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 394123E5215BB30B005D69C4 /* CarrierPlugin.m */; };
 		3941248A2163A6F7005D69C4 /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 394124892163A68E005D69C4 /* libRNCamera.a */; };
+		3950311921AE4FD700101E8A /* FriendSessionStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 395030F121AE4BBE00101E8A /* FriendSessionStream.m */; };
+		3950311C21AE5E9F00101E8A /* RN_SESSION.m in Sources */ = {isa = PBXBuildFile; fileRef = 3950311B21AE5E9F00101E8A /* RN_SESSION.m */; };
 		39A8D4EA214BE62F00819ED6 /* Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A8D4E9214BE62F00819ED6 /* Test.m */; };
 		39A8D52B214CE8B100819ED6 /* RCTAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A8D52A214CE8B100819ED6 /* RCTAssetManager.m */; };
 		39A8D5522150D64400819ED6 /* RCTStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A8D5512150D64400819ED6 /* RCTStoreManager.m */; };
@@ -392,6 +394,10 @@
 		394123E4215BB30B005D69C4 /* CarrierPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CarrierPlugin.h; sourceTree = "<group>"; };
 		394123E5215BB30B005D69C4 /* CarrierPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CarrierPlugin.m; sourceTree = "<group>"; };
 		3941245F2163A68D005D69C4 /* RNCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RNCamera.xcodeproj"; sourceTree = "<group>"; };
+		395030F021AE4BBE00101E8A /* FriendSessionStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FriendSessionStream.h; sourceTree = "<group>"; };
+		395030F121AE4BBE00101E8A /* FriendSessionStream.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FriendSessionStream.m; sourceTree = "<group>"; };
+		3950311A21AE5E9F00101E8A /* RN_SESSION.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RN_SESSION.h; sourceTree = "<group>"; };
+		3950311B21AE5E9F00101E8A /* RN_SESSION.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RN_SESSION.m; sourceTree = "<group>"; };
 		39A8D4C3214BE62F00819ED6 /* Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
 		39A8D4E9214BE62F00819ED6 /* Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Test.m; sourceTree = "<group>"; };
 		39A8D529214CE8B100819ED6 /* RCTAssetManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTAssetManager.h; sourceTree = "<group>"; };
@@ -615,6 +621,10 @@
 				3941233E215A374F005D69C4 /* Carrier.m */,
 				394123E4215BB30B005D69C4 /* CarrierPlugin.h */,
 				394123E5215BB30B005D69C4 /* CarrierPlugin.m */,
+				395030F021AE4BBE00101E8A /* FriendSessionStream.h */,
+				395030F121AE4BBE00101E8A /* FriendSessionStream.m */,
+				3950311A21AE5E9F00101E8A /* RN_SESSION.h */,
+				3950311B21AE5E9F00101E8A /* RN_SESSION.m */,
 			);
 			path = Carrier;
 			sourceTree = "<group>";
@@ -1260,7 +1270,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1309,11 +1319,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3950311921AE4FD700101E8A /* FriendSessionStream.m in Sources */,
 				39A8D52B214CE8B100819ED6 /* RCTAssetManager.m in Sources */,
 				394123E6215BB30B005D69C4 /* CarrierPlugin.m in Sources */,
 				39A8D5522150D64400819ED6 /* RCTStoreManager.m in Sources */,
 				39A8D4EA214BE62F00819ED6 /* Test.m in Sources */,
 				3941233F215A374F005D69C4 /* Carrier.m in Sources */,
+				3950311C21AE5E9F00101E8A /* RN_SESSION.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				39A8D59221517ED100819ED6 /* Util.m in Sources */,

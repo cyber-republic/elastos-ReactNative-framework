@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-import {AppRegistry, StyleSheet, View, Image, ActionSheetIOS, NativeModules} from 'react-native';
-import { Container, Header, Content, Footer, FooterTab, Button, Text } from 'native-base';
+import {AppRegistry, StyleSheet, View, Image, ActionSheetIOS, NativeModules, Platform} from 'react-native';
+import { Container, Header, Content, Footer, FooterTab, Button, Text, Toast } from 'native-base';
 
 import dapp from '../shared/dapp';
 
@@ -9,6 +9,7 @@ import {plugin} from 'CR';
 const Carrier = plugin.Carrier;
 
 
+const target = '6XwWqntxZFwa6XmAtSmJLNZbrL9VwbsMr8GDMxKAUPmy';
 class App extends Component{
   constructor(){
     super();
@@ -18,18 +19,21 @@ class App extends Component{
     };
 
     this.carrier = null;
+
+
   }
   render() {
     return (
       <Container style={styles.container}>
         <Text style={styles.log}>{this.state.log.join('\n')}</Text>
         <Text style={styles.error}>{this.state.error}</Text>
+        
 
         <Content>
           <Button style={styles.btn} success block onPress={this.testFn.bind(this, 'getVersion')}>
             <Text>getVersion</Text>
           </Button>
-          <Button style={styles.btn} success block onPress={this.testFn.bind(this, 'isValidAddress')}>
+          {/* <Button style={styles.btn} success block onPress={this.testFn.bind(this, 'isValidAddress')}>
             <Text>isValidAddress</Text>
           </Button>
           <Button style={styles.btn} success block onPress={this.testFn.bind(this, 'getAddress')}>
@@ -44,7 +48,7 @@ class App extends Component{
           <Button style={styles.btn} success block onPress={this.testFn.bind(this, 'addFriend')}>
             <Text>addFriend</Text>
           </Button>
-          {/* <Button style={styles.btn} success block onPress={this.testFn.bind(this, 'acceptFriend')}>
+          <Button style={styles.btn} success block onPress={this.testFn.bind(this, 'acceptFriend')}>
             <Text>acceptFriend</Text>
           </Button> */}
           <Button style={styles.btn} success block onPress={this.testFn.bind(this, 'getFriendInfo')}>
@@ -59,11 +63,28 @@ class App extends Component{
           <Button style={styles.btn} success block onPress={this.testFn.bind(this, 'createSession')}>
             <Text>createSession</Text>
           </Button>
+          <Button style={styles.btn} success block onPress={this.testFn.bind(this, 'sessionRequest')}>
+            <Text>sessionRequest</Text>
+          </Button>
+          <Button style={styles.btn} success block onPress={this.testFn.bind(this, 'sessionReplyRequest')}>
+            <Text>sessionReplyRequest</Text>
+          </Button>
+          <Button style={styles.btn} success block onPress={this.testFn.bind(this, 'writeStream')}>
+            <Text>writeStream</Text>
+          </Button>
         </Content>
         
         
       </Container>
     );
+  }
+
+  async openPrompt(title, message=''){
+    return new Promise((resolve, reject)=>{
+      AlertIOS.prompt(title, message, (value)=>{
+        resolve(value);
+      });
+    });
   }
 
   async testFn(name){
@@ -74,7 +95,9 @@ class App extends Component{
         rs = await Carrier.getVersion();
         break;
       case 'isValidAddress':
-        rs = await Carrier.isValidAddress('aaabbb');
+        tmp = await this.openPrompt('Enter an address');
+        rs = await Carrier.isValidAddress(tmp);
+        rs = tmp + ' is a valid address => '+rs.toString();
         break;
       case 'getAddress':
         rs = await this.carrier.getAddress();
@@ -104,7 +127,7 @@ class App extends Component{
         break;
       case 'acceptFriend':
         try{
-          rs = await this.carrier.acceptFriend('4ni3UKYY9xHDcodNaP1edAWDGuF5cmWTU8QWH4JnNfwV');
+          rs = await this.carrier.acceptFriend('47LBjMwsybaJK551bvSW3eRLLJuBVM53k6TJdL3LAwAM');
         }catch(e){
           this.setError(e);
         }
@@ -119,7 +142,7 @@ class App extends Component{
         break;
       case 'sendMessage':
         try{
-          rs = await this.carrier.sendMessage('4ni3UKYY9xHDcodNaP1edAWDGuF5cmWTU8QWH4JnNfwV', 'adsfsfdsf');
+          rs = await this.carrier.sendMessage('47LBjMwsybaJK551bvSW3eRLLJuBVM53k6TJdL3LAwAM', 'adsfsfdsf');
         }catch(e){
           this.setError(e);
         }
@@ -129,8 +152,39 @@ class App extends Component{
         rs = await this.carrier.close();
         break;
       case 'createSession':
-        await this.carrier.createSession('6XwWqntxZFwa6XmAtSmJLNZbrL9VwbsMr8GDMxKAUPmy');
-        rs = 'ok';
+        try{
+          rs = await this.carrier.createSession(
+            target,
+            Carrier.config.STREAM_TYPE.TEXT,
+            Carrier.config.STREAM_MODE.RELIABLE
+          );
+        }catch(e){
+          this.setError(e);
+        }
+        
+        break;
+      case 'sessionRequest':
+        try{
+          rs = await this.carrier.sessionRequest(target);
+        }catch(e){
+          this.setError(e);
+        }
+        break;
+      case 'sessionReplyRequest':
+        try{
+          rs = await this.carrier.sessionReplyRequest(target, 0, null);
+        }catch(e){
+          this.setError(e);
+        }
+        break;
+      case 'writeStream':
+        try{
+          // const buf = new Buffer('hello word')
+          rs = await this.carrier.writeStream(1, 'sljfdlsjflsj')
+        }catch(e){
+          this.setError(e);
+        }
+
         break;
     }
     if(rs || _.isString(rs)){
@@ -161,6 +215,17 @@ class App extends Component{
       },
       onFriendMessage : (data)=>{
         this.setLog('receive message from '+data.userId+' with ['+data.message+']');
+      },
+      onSessionRequest : (data)=>{
+        this.setLog('carrier onSessionRequest '+JSON.stringify(data));
+      },
+      onStateChanged : (data)=>{
+        this.setLog('carrier onStateChanged : '+JSON.stringify(data));
+      },
+      onStreamData : (data)=>{
+        this.setLog('carrier onStreamData : '+JSON.stringify(data));
+
+        
       }
     });
     await this.carrier.start();
@@ -183,9 +248,11 @@ const styles = StyleSheet.create({
     },
     log : {
       backgroundColor: '#000',
-      color: 'green',
+      color: '#ff0',
       fontSize:14, 
-      width:"100%"
+      width:"100%",
+      height : 300,
+      overflow: 'scroll'
     },
     error : {
       marginTop: 10,

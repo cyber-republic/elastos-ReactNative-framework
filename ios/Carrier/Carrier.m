@@ -8,6 +8,7 @@
 
 #import "Carrier.h"
 #import <React/RCTLog.h>
+#import "RN_SESSION.h"
 
 
 
@@ -16,11 +17,11 @@
   ELACarrierConnectionStatus connectStatus;
   ELACarrier *elaCarrier;
   
-  ELACarrierSessionManager *elaSessionManager;
-  ELACarrierStream *_stream;
   
   dispatch_queue_t managerCarrierQueue;
   CarrierSendEvent _callback;
+  
+  RN_SESSION *_rn_session;
 }
 @end
 
@@ -29,6 +30,11 @@
 -(ELACarrier *) getIntance{
   return elaCarrier;
 }
+
+-(RN_SESSION *) getRNSessionInstance{
+  return _rn_session;
+}
+
 
 //-(ELACarrierSession *) getSessionInstance{
 //  return _session;
@@ -94,6 +100,9 @@
       
       [ELACarrier initializeInstanceWithOptions:options delegate:self error:&error];
       elaCarrier = [ELACarrier getInstance];
+      
+      
+      
       _init = NO;
       if (elaCarrier == nil) {
         RCTLog(@"Create ELACarrier instance failed: %@", error);
@@ -107,7 +116,9 @@
     
     _init = [elaCarrier startWithIterateInterval:1000 error:&error];
     if (_init) {
+      [self setCallback:sendEvent];
       _callback = sendEvent;
+      _rn_session = [[RN_SESSION alloc] initWithCarrier:(id)self];
     }
     else {
       RCTLog(@"Start ELACarrier instance failed: %@", error);
@@ -139,60 +150,6 @@
   connectStatus = ELACarrierConnectionStatusDisconnected;
 }
 
--(ELACarrierSession *) createNewSession: (NSString *)name friendId:(NSString *)friendId{
-  elaSessionManager = [ELACarrierSessionManager getInstance:[self getIntance] error:nil];
-  
-  NSError *error = nil;
-  ELACarrierSession *session = [elaSessionManager newSessionTo:friendId error:&error];
-  NSString *peer = [session getPeer];
-  RCTLog(@"%@", peer);
-  ELACarrierStreamOptions options = ELACarrierStreamOptionMultiplexing | ELACarrierStreamOptionPortForwarding | ELACarrierStreamOptionReliable;
-  
-//  NSError *error = nil;
-   _stream = [session addStreamWithType:ELACarrierStreamTypeApplication options:options delegate:(id)self error:&error];
-  
-//  [session sendInviteRequestWithResponseHandler:
-//   ^(ELACarrierSession *session, NSInteger status, NSString *reason, NSString *sdp) {
-//     RCTLog(@"Invite request response, stream state: %zd", status);
-//
-//     if (status == 0) {
-//       NSError *error = nil;
-//       if (![session startWithRemoteSdp:sdp error:&error]) {
-//         RCTLog(@"Start session error: %@", error);
-//       }
-//     }
-//     else {
-//       RCTLog(@"Remote refused session invite: %d, sdp: %@", (int)status, reason);
-//     }
-//   } error:&error];
-  
-  return session;
-}
-
-
-#pragma mark - ELACarrierStreamDelegate
--(void) carrierStream:(ELACarrierStream *)stream stateDidChange:(enum ELACarrierStreamState)newState{
-  RCTLog(@"Stream state: %d", (int)newState);
-  
-  switch (newState) {
-    case ELACarrierStreamStateInitialized:
- 
-      break;
-      
-    case ELACarrierStreamStateConnected:
-
-      break;
-      
-    case ELACarrierStreamStateDeactivated:
-    case ELACarrierStreamStateClosed:
-    case ELACarrierStreamStateError:
-     
-      break;
-      
-    default:
-      break;
-  }
-}
 
 #pragma mark - ELACarrierDelegate
 -(void) carrier:(ELACarrier *)carrier connectionStatusDidChange:(enum ELACarrierConnectionStatus)newStatus{

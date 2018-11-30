@@ -11,6 +11,8 @@
 #import <ElastosCarrier/ElastosCarrier.h>
 #import <React/RCTEventEmitter.h>
 
+#import "FriendSessionStream.h"
+
 @interface CarrierPlugin : RCTEventEmitter<RCTBridgeModule>
 
 @end

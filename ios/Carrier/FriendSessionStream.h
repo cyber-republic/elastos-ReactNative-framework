@@ -23,13 +23,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 //-(int) getStreamId;
 
--(instancetype) initWithFriendId : (NSString *) frinedId;
+-(instancetype) initWithFriendId : (NSString *)frinedId;
 
 +(FriendSessionStream *) getInstanceByStreamId: (int)streamId;
 +(FriendSessionStream *) getInstanceByFriendId: (NSString *)friendId;
 +(FriendSessionStream *) getInstanceByStream: (ELACarrierStream *)stream;
 +(void) putByFriendId: (NSString *)friendId
                  data:(FriendSessionStream *)data;
++(void) removeByFriendId: (NSString *)friendId;
 
 @end
 

@@ -19,7 +19,7 @@
 
 - (instancetype)init{
   if(self = [super init]){
-    //初始化
+ 
   }
   return self;
 }
@@ -31,7 +31,7 @@
     NSError *error = nil;
     ELACarrierSessionManager *m = [ELACarrierSessionManager getInstance:self.elaCarrier usingHandler:
       ^(ELACarrier *_carrier, NSString *friendId, NSString *sdp){
-//        RCTLog(@"[ onSessionRequest ] => %@, %@", friendId, sdp);
+        RCTLog(@"[ onSessionRequest ] => %@, %@", friendId, sdp);
         
         FriendSessionStream *fss = [self getFriendSessionByFriendId:friendId];
         [fss setSdp:sdp];
@@ -53,12 +53,11 @@
 }
 
 -(int) start: (NSString *)friendId
-   streamType: (int)streamType
-   streamMode: (int)streamMode
+  streamType: (int)streamType
+  streamMode: (int)streamMode
+       error: (NSError *__autoreleasing  _Nullable * _Nullable)error
 {
-//  RCTLog(@"[ RN_SESSION.start ] => %@", friendId);
-  
-  FriendSessionStream *fss = [self addStreamByType:friendId streamType:streamType streamMode:streamMode];
+  FriendSessionStream *fss = [self addStreamByType:friendId streamType:streamType streamMode:streamMode error:error];
   
   return fss.streamId;
 }
@@ -66,15 +65,14 @@
 -(FriendSessionStream *) addStreamByType: (NSString *)friendId
              streamType: (int)streamType
              streamMode: (int)streamMode
+                  error: (NSError *__autoreleasing  _Nullable * _Nullable)error
 {
   FriendSessionStream *fss = [self getFriendSessionByFriendId:friendId];
   ELACarrierSession *session = fss.session;
-  
-  NSError *error = nil;
   ELACarrierStream *stream = [session addStreamWithType:(ELACarrierStreamType)streamType
                                                 options:(ELACarrierStreamOptions)streamMode
                                                delegate:(id)self
-                                                  error:&error];
+                                                  error:error];
   
   [fss setStream:stream];
   
@@ -95,12 +93,12 @@
   return fss;
 }
 
--(id) sessionRequest: (NSString *)friendId
+-(void) sessionRequest: (NSString *)friendId
+                 error: (NSError *__autoreleasing  _Nullable * _Nullable)error
 {
-  FriendSessionStream *fss = [FriendSessionStream getInstanceByFriendId:friendId];
+  FriendSessionStream *fss = [self getFriendSessionByFriendId:friendId];
   ELACarrierSession *_session = fss.session;
   
-  NSError *error = nil;
   [_session sendInviteRequestWithResponseHandler:
    ^(ELACarrierSession *session, NSInteger status, NSString *reason, NSString *sdp) {
      RCTLog(@"Invite request response, stream state: %zd", status);
@@ -114,33 +112,40 @@
      else {
        RCTLog(@"Remote refused session invite: %d, sdp: %@", (int)status, reason);
      }
-   } error:&error];
-  
-  return error;
+   } error:error];
 }
 
--(id) sessionReplyRequest: (NSString *)friendId
-                     status:(int)status
-                     reason:(NSString *)reason
+-(void) sessionReplyRequest: (NSString *)friendId
+                     status: (int)status
+                     reason: (NSString *)reason
+                      error: (NSError *__autoreleasing  _Nullable * _Nullable)error
+{
+  FriendSessionStream *fss = [self getFriendSessionByFriendId:friendId];
+  [fss.session replyInviteRequestWithStatus:(NSInteger)status reason:reason error:error];
+  
+  [fss.session startWithRemoteSdp:fss.sdp error:error];
+}
+
+-(NSNumber *) writeToStream: (ELACarrierStream *)stream
+                data: (NSString *)data
+               error: (NSError *__autoreleasing  _Nullable * _Nullable)error
+{
+  NSNumber *rs = [stream writeData:[data dataUsingEncoding:NSUTF8StringEncoding] error:error];
+  return rs;
+}
+
+-(void) close: (NSString *)friendId
+        error: (NSError *__autoreleasing  _Nullable * _Nullable)error
 {
   FriendSessionStream *fss = [FriendSessionStream getInstanceByFriendId:friendId];
-  NSError *error = nil;
-  [fss.session replyInviteRequestWithStatus:(NSInteger)status reason:reason error:&error];
-  
-  [fss.session startWithRemoteSdp:fss.sdp error:&error];
-  
-  return error;
-}
-
--(id) writeToStream: (ELACarrierStream *)stream
-               data:(NSString *)data
-{
-  NSError *error = nil;
-  NSNumber *rs = [stream writeData:[data dataUsingEncoding:NSUTF8StringEncoding] error:&error];
-  if(error)
-    return error;
-  
-  return rs;
+  if(fss == nil){
+    NSDictionary *dict = @{NSLocalizedDescriptionKey:@"session not start"};
+    *error = [NSError errorWithDomain:NSCustomErrorDomain code:10001 userInfo:dict];
+    return;
+  }
+  [fss.session removeStream:fss.stream error:error];
+  [fss.session close];
+  [FriendSessionStream removeByFriendId:friendId];
 }
 
 
@@ -161,25 +166,25 @@
                               }
                           };
   self.carrier.callback(self.elaCarrier, param);
+
+}
+
+-(void) carrierStream:(ELACarrierStream *)stream
+       didReceiveData:(NSData *)data
+{
+  NSString *d = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+  RCTLog(@"[ onStreamData ] => data=%@", d);
   
-//  switch (newState) {
-//    case ELACarrierStreamStateInitialized:
-//
-//      break;
-//
-//    case ELACarrierStreamStateConnected:
-//
-//      break;
-//
-//    case ELACarrierStreamStateDeactivated:
-//    case ELACarrierStreamStateClosed:
-//    case ELACarrierStreamStateError:
-//
-//      break;
-//
-//    default:
-//      break;
-//  }
+  FriendSessionStream *fss = [FriendSessionStream getInstanceByStream:stream];
+  NSDictionary *param = @{
+                          @"type" : @"onStreamData",
+                          @"data" : @{
+                              @"text" : d,
+                              @"friendId" : fss.id,
+                              @"streamId" : [NSNumber numberWithInt:fss.streamId]
+                              }
+                          };
+  self.carrier.callback(self.elaCarrier, param);
 }
 
 @end

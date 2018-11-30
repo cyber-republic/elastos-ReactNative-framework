@@ -74,6 +74,10 @@ static int N = 0;
   [all_map setValue:data forKey:friendId];
 }
 
++(void) removeByFriendId: (NSString *)friendId
+{
+  [all_map removeObjectForKey:friendId];
+}
 
 
 @end

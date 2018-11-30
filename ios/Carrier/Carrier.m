@@ -10,7 +10,7 @@
 #import <React/RCTLog.h>
 #import "RN_SESSION.h"
 
-
+NSString * const NSCustomErrorDomain = @"PLUGIN-ERROR";
 
 @interface Carrier () <ELACarrierDelegate>{
   BOOL _init;

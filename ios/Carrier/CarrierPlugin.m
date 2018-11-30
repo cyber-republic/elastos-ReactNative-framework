@@ -307,9 +307,16 @@ RCT_EXPORT_METHOD
 (createSession: (NSString *)cid :(NSString *)friendId :(int)streamType :(int)streamMode :(RCTResponseSenderBlock)callback){
   Carrier *carrier = [self getCarrier:cid];
   RN_SESSION *_rn = [carrier getRNSessionInstance];
-  int streamId = [_rn start:friendId streamType:streamType streamMode:streamMode];
- 
-  callback(@[NULL_ERR, [NSNumber numberWithInt:streamId]]);
+  
+  NSError *error = nil;
+  int streamId = [_rn start:friendId streamType:streamType streamMode:streamMode error:&error];
+  
+  if(error){
+    callback(@[[self create_error:error]]);
+  }
+  else{
+    callback(@[NULL_ERR, [NSNumber numberWithInt:streamId]]);
+  }
 }
 
 RCT_EXPORT_METHOD
@@ -317,14 +324,14 @@ RCT_EXPORT_METHOD
   Carrier *carrier = [self getCarrier:cid];
   RN_SESSION *_rn = [carrier getRNSessionInstance];
   
-  NSError *err = [_rn sessionRequest:friendId];
-  if(err){
-    callback(@[[self create_error:err]]);
+  NSError *error = nil;
+  [_rn sessionRequest:friendId error:&error];
+  if(error){
+    callback(@[[self create_error:error]]);
   }
   else{
     callback(@[NULL_ERR, OK]);
   }
-  
 }
 
 RCT_EXPORT_METHOD
@@ -332,7 +339,8 @@ RCT_EXPORT_METHOD
   Carrier *carrier = [self getCarrier:cid];
   RN_SESSION *_rn = [carrier getRNSessionInstance];
   
-  NSError *error = [_rn sessionReplyRequest:friendId status:status reason:reason];
+  NSError *error = nil;
+  [_rn sessionReplyRequest:friendId status:status reason:reason error:&error];
   if(error){
     callback(@[[self create_error:error]]);
   }
@@ -360,12 +368,29 @@ RCT_EXPORT_METHOD
     return;
   }
   
-  id rs = [_rn writeToStream:fss.stream data:data];
-  if([rs isKindOfClass:[NSError class]]){
-    callback(@[[self create_error:rs]]);
+  NSError *error = nil;
+  [_rn writeToStream:fss.stream data:data error:&error];
+  if(error){
+    callback(@[[self create_error:error]]);
   }
   else{
-    callback(@[NULL_ERR, rs]);
+    callback(@[NULL_ERR, OK]);
+  }
+}
+
+RCT_EXPORT_METHOD
+(closeSession: (NSString *)cid :(NSString *)friendId :(RCTResponseSenderBlock)callback){
+  Carrier *carrier = [self getCarrier:cid];
+  RN_SESSION *_rn = [carrier getRNSessionInstance];
+  
+  NSError *error = nil;
+  [_rn close:friendId error:&error];
+  
+  if(error){
+    callback(@[[self create_error:error]]);
+  }
+  else{
+    callback(@[NULL_ERR, OK]);
   }
 }
 
@@ -414,6 +439,9 @@ RCT_EXPORT_METHOD
     }
     else if([type isEqualToString:@"onSessionRequest"]){
       [weakSelf onSessionRequest:data];
+    }
+    else if([type isEqualToString:@"onStreamData"]){
+      [weakSelf onStreamData:data];
     }
 
   };
@@ -472,6 +500,9 @@ RCT_EXPORT_METHOD
 }
 -(void) onSessionRequest: (NSDictionary *)param{
   [self sendEventWithName:@"onSessionRequest" body:@[param]];
+}
+-(void) onStreamData: (NSDictionary *)param{
+  [self sendEventWithName:@"onStreamData" body:@[param]];
 }
 
 -(NSString *) create_error: (id)error{

@@ -21,15 +21,68 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 -(instancetype) initWithCarrier: (Carrier *) carrier;
+
+
+/**
+ new session to frinedId
+
+ @param friendId
+ @param streamType
+ @param streamMode
+ @param error
+ @return stream id
+ */
 -(int) start: (NSString *)friendId
-                 streamType: (int)streamType
-                 streamMode: (int)streamMode;
--(id) sessionRequest: (NSString *)friendId;
--(id) sessionReplyRequest: (NSString *)friendId
-                     status:(int)status
-                     reason:(NSString *)reason;
--(id) writeToStream: (ELACarrierStream *)stream
-               data:(NSString *)data;
+  streamType: (int)streamType
+  streamMode: (int)streamMode
+       error: (NSError *__autoreleasing  _Nullable * _Nullable)error;
+
+
+/**
+ send session request to friendId after create session.
+
+ @param friendId
+ @param error
+ */
+-(void) sessionRequest: (NSString *)friendId
+               error: (NSError *__autoreleasing  _Nullable * _Nullable)error;
+
+
+/**
+ reply session request
+
+ @param friendId
+ @param status 0:accept 1:refuse
+ @param reason if refuse, this is reason
+ @param error
+ */
+-(void) sessionReplyRequest: (NSString *)friendId
+                   status: (int)status
+                   reason: (NSString *)reason
+                    error: (NSError *__autoreleasing  _Nullable * _Nullable)error;
+
+
+/**
+ send data to stream
+
+ @param stream
+ @param data
+ @param error
+ @return data length
+ */
+-(NSNumber *) writeToStream: (ELACarrierStream *)stream
+               data: (NSString *)data
+              error: (NSError *__autoreleasing  _Nullable * _Nullable)error;
+
+
+/**
+ close session for friendId
+
+ @param friendId
+ @param error
+ */
+-(void) close: (NSString *)friendId
+      error: (NSError *__autoreleasing  _Nullable * _Nullable)error;
 
 @end
 

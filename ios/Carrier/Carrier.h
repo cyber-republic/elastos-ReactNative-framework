@@ -10,6 +10,7 @@
 
 //#import "RN_SESSION.h"
 
+FOUNDATION_EXPORT NSErrorDomain const NSCustomErrorDomain;
 
 @class RN_SESSION;
 @interface Carrier : NSObject

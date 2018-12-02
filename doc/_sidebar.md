@@ -3,6 +3,8 @@
 - [Home](/)
 
     - [Quick Start](/rn-fw/)
+	
+	- [White Paper](/rn-fw/whitepaper.md)
 
     - General
         - [Requirements](/rn-fw/requirements.md)

@@ -14,7 +14,7 @@ const init = (param)=>{
 
 	IHStyle.build(_.merge({}, param.themeStyle));
 };
-console.log(111, Carrier);
+
 const plugin = {
 	Carrier,
 	QRCode, // https://github.com/cssivision/react-native-qrcode,

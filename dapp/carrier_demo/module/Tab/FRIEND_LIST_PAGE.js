@@ -86,7 +86,7 @@ const Page = class extends BasePage{
           return (
             <ListItem onPress={this.gotoInfo.bind(this, item.userId)}  key={i}>
               <Left>
-                <Text>{item.name || 'NA'}{label}</Text>
+                <Text>{item.name || 'NA'}{label} [{item.state || 'NA'}]</Text>
               </Left>
               <Right>
                 <Text style={{color:'#ccc'}}>

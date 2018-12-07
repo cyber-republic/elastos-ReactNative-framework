@@ -23,6 +23,19 @@ export default (dm)=>{
 
       dm.dispatch(dm.action.message_add(param));
     },
+    async sendStreamMessage(userId, streamContent){
+      await dm.method.session.writeStream(userId, streamContent);
+
+      const param = {
+        type : 'from',
+        userId,
+        time : Date.now(),
+        content : streamContent,
+        contentType : 'stream'
+      };
+
+      dm.dispatch(dm.action.message_add(param));
+    },
 
 
     getTotalUnreadNumber(){

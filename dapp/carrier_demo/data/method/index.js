@@ -59,6 +59,10 @@ const F = {
         };
 
         dm.dispatch(dm.action.friends_all_set(param));
+
+        if(!dm.method.session.isConnect(data.friendId)){
+          dm.method.session.createSession(data.friendId);
+        }
       },
       onFriendPresence : (data)=>{
         const param = {};
@@ -84,6 +88,31 @@ const F = {
         };
 
         dm.dispatch(dm.action.message_add(param));
+      },
+      onSessionRequest : ()=>{
+
+      },
+      onStateChanged : (data)=>{
+        const param = {};
+        param[data.friendId] = {
+          state : data.state
+        };
+        console.log(111, data);
+        dm.dispatch(dm.action.friends_all_set(param));
+        
+        if(data.state === 1){
+          dm.method.session.sessionRequest(data.friendId);
+        }
+      },
+      onStreamData : (data)=>{
+        const param = {
+          type : 'to',
+          userId : data.friendId,
+          time : Date.now(),
+          contentType : 'stream',
+          content : data.text
+        };
+        dm.dispatch(dm.action.message_add(param));
       }
     };
   }
@@ -107,6 +136,9 @@ export default (dm)=>{
         throw 'carrier not started';
       }
       return _carrier;
+    },
+    getCarrierConfig(){
+      return Carrier.config;
     },
 
 

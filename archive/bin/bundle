@@ -1,0 +1,204 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const path = require('path');
+const Q = require('q');
+const chalk = require('chalk');
+const yargs = require('yargs');
+const shell = require('shelljs');
+
+const argv = yargs.usage('Usage: bundle [options]')
+  .example('bundle --platform ios -z -i -d --dest build --dest-zip build --dest-inline build')
+  .help('h')
+  .alias('h', 'help')
+  .options({
+    p: {
+      alias: 'platform',
+      demand: true,
+      choices: ['ios', 'android'],
+      describe: '对应打包平台',
+      type: 'string'
+    },
+    z: {
+      alias: 'zip',
+      describe: '是否打zip包[true|false]',
+      boolean: true
+    },
+    i: {
+      alias: 'inline',
+      describe: '是否打内置包[true|false]',
+      boolean: true
+    },
+    d: {
+      alias: 'dev',
+      describe: '是否开发环境[true|false]，开发环境代码不进行压缩',
+      boolean: true
+    },
+    'dest': {
+      default: 'build',
+      describe: '打包文件生成目录',
+      type: 'string'
+    },
+    'dest-zip': {
+      default: 'build',
+      describe: '打zip包生成目录',
+      type: 'string'
+    },
+    'dest-inline': {
+      default: 'build',
+      describe: '打内置包生成目录',
+      type: 'string'
+    },
+    'entry-file': {
+      describe: '输入文件名，例：index.ios.js',
+      type: 'string'
+    },
+    'bundle-output': {
+      describe: '输出文件名，例：index.ios.bundle',
+      type: 'string'
+    }
+  })
+  .epilog('copyright 2017')
+  .argv;
+
+const platform = argv.platform;
+const zip = argv.zip;
+const inline = argv.inline;
+const dev = argv.dev;
+const dest = argv.dest;
+const destZip = argv['dest-zip'];
+const destInline = argv['dest-inline'];
+const entryFile = argv['entry-file'] || ('index.' + platform + '.js');
+const bundleOutput = argv['bundle-output'] || ('index.' + platform + '.bundle');
+
+const BUNDLE_DIR = path.join(process.cwd(), dest);
+const ZIP_DIR = path.join(process.cwd(), destZip);
+const INLINE_DIR = path.join(process.cwd(), destInline);
+
+const projectName = process.env.npm_package_name.replace('rn-', '');
+const platformDir = path.join(BUNDLE_DIR, platform);
+const platformInline = platform + '-inline';
+const platformInlineDir = path.join(INLINE_DIR, platformInline);
+
+function cleanBuildDir() {
+  console.log(chalk.cyan('清空' + dest + '/' + platform + '目录...'));
+
+  let deferred = Q.defer();
+  let command = [
+    'rm -rf ' + platformDir,
+    'mkdir -p ' + platformDir
+  ].join(' && ');
+
+  shell.exec(command, (code, stdout, stderr) => {
+    if (code === 0) {
+      console.log(chalk.green(dest + '/' + platform + '目录清空完成'));
+      deferred.resolve();
+    } else {
+      console.log(chalk.red(dest + '/' + platform + '目录清空失败'));
+      deferred.reject(stderr);
+    }
+  });
+
+  return deferred.promise;
+}
+
+function createBundle() {
+  console.log(chalk.cyan('开始打包' + platform + '平台代码...'));
+
+  let deferred = Q.defer();
+  let command = [
+    'react-native bundle --entry-file ' + entryFile + ' --platform ' + platform + ' --dev ' + dev + ' --bundle-output ' + platformDir + '/' + bundleOutput + ' --assets-dest ' + platformDir
+  ].join(' && ');
+
+  shell.exec(command, function(code, stdout, stderr) {
+    if (code == 0) {
+      console.log(chalk.green(platform + '平台代码打包成功'));
+      deferred.resolve();
+    } else {
+      console.log(chalk.red(platform + '平台代码打包失败'));
+      deferred.reject(stderr);
+    }
+  });
+
+  return deferred.promise;
+}
+
+function createZip() {
+  let deferred = Q.defer();
+
+  if (!zip) {
+    deferred.resolve();
+  } else {
+    console.log(chalk.cyan('开始生成' + platform + '平台zip包...'));
+
+    let command = [
+      'mkdir -p ' + ZIP_DIR,
+      'cd ' + platformDir,
+      'zip -r ' + platform + '.zip ./*',
+      'cd ' + ZIP_DIR,
+      'rm -rf ' + platform + '.zip',
+      'mv ' + platformDir + '/' + platform + '.zip .'
+    ].join(' && ');
+
+    shell.exec(command, function(code, stdout, stderr) {
+      if (code == 0) {
+        console.log(chalk.green('成功生成' + platform + '平台zip包'));
+        deferred.resolve();
+      } else {
+        console.log(chalk.red('生成' + platform + '平台zip包失败'));
+        deferred.reject(stderr);
+      }
+    });
+  }
+
+  return deferred.promise;
+}
+
+function createInline() {
+  let deferred = Q.defer();
+
+  if (!inline) {
+    deferred.resolve();
+  } else {
+    console.log(chalk.cyan('开始生成' + platform + '平台内置包...'));
+
+    let suffix = bundleOutput.substr(bundleOutput.lastIndexOf('.'));
+    let command = [
+      'mkdir -p ' + INLINE_DIR,
+      'rm -rf ' + platformInlineDir,
+      'cp -rf ' + platformDir + ' ' + platformInlineDir,
+      'cd ' + platformInlineDir,
+      'mv ' + bundleOutput + ' ' + projectName + suffix,
+      'mv ' + bundleOutput + '.meta ' + projectName + suffix + '.meta',
+      'zip -r ' + platformInline + '.zip ./*',
+      'cd ' + INLINE_DIR,
+      'rm -rf ' + platformInline + '.zip',
+      'mv ' + platformInlineDir + '/' + platformInline + '.zip .',
+      'rm -rf ' + platformInlineDir
+    ].join(' && ');
+
+    shell.exec(command, function(code, stdout, stderr) {
+      if (code == 0) {
+        console.log(chalk.green('成功生成' + platform + '平台内置包'));
+        deferred.resolve();
+      } else {
+        console.log(chalk.red('生成' + platform + '平台内置包失败'));
+        deferred.reject(stderr);
+      }
+    });
+  }
+
+  return deferred.promise;
+}
+
+cleanBuildDir()
+  .then(createBundle)
+  .then(createZip)
+  .then(createInline)
+  .then(() => {
+    console.log(chalk.green('构建完成\n'));
+  })
+  .catch((stderr) => {
+    console.log(chalk.red(stderr));
+  });

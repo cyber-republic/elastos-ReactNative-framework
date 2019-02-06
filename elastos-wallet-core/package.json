@@ -1,0 +1,67 @@
+{
+  "_args": [
+    [
+      "react-native-elastos-wallet-core@1.0.5",
+      "/Users/dev/Documents/react-native-elastos-wallet-core-demo"
+    ]
+  ],
+  "_from": "react-native-elastos-wallet-core@1.0.5",
+  "_id": "react-native-elastos-wallet-core@1.0.5",
+  "_inBundle": false,
+  "_integrity": "sha512-wIfEJVAkbhCzPok5aaR0yUbAcR8uhte9nIP8c7Z6HdATc/7WY5vzFsZxQ9jICgr94AQdKQXK7XhqY3gdmL9zCA==",
+  "_location": "/react-native-elastos-wallet-core",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "react-native-elastos-wallet-core@1.0.5",
+    "name": "react-native-elastos-wallet-core",
+    "escapedName": "react-native-elastos-wallet-core",
+    "rawSpec": "1.0.5",
+    "saveSpec": null,
+    "fetchSpec": "1.0.5"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-native-elastos-wallet-core/-/react-native-elastos-wallet-core-1.0.5.tgz",
+  "_spec": "1.0.5",
+  "_where": "/Users/dev/Documents/react-native-elastos-wallet-core-demo",
+  "author": {
+    "name": "Ademcan",
+    "email": "ademcan@ademcan.net"
+  },
+  "bugs": {
+    "url": "https://github.com/cyber-republic/react-native-elastos-wallet-core/issues"
+  },
+  "description": "## Getting started",
+  "devDependencies": {
+    "react": "16.2.0",
+    "react-native": "^0.52.0"
+  },
+  "homepage": "https://github.com/cyber-republic/react-native-elastos-wallet-core#readme",
+  "keywords": [
+    "elastos",
+    "react-native",
+    "wallet",
+    "mainchain"
+  ],
+  "license": "Apache-2.0",
+  "licenseFilename": "LICENSE",
+  "main": "index.js",
+  "name": "react-native-elastos-wallet-core",
+  "peerDependencies": {
+    "react": "16.2.0",
+    "react-native": "^0.52.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyber-republic/react-native-elastos-wallet-core.git",
+    "baseUrl": "https://github.com/cyber-republic/react-native-elastos-wallet-core"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "title": "React Native Elastos Wallet Core",
+  "version": "1.0.5"
+}

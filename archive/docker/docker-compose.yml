@@ -1,0 +1,11 @@
+version: '3'
+services:
+  proxy:
+    # container_name: nginx
+    image: nginx:alpine
+    ports:
+      - 3000:80
+
+    volumes:
+      - ./proxy.conf:/etc/nginx/conf.d/proxy.conf:ro
+      - ../remote:/www

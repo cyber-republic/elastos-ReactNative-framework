@@ -1,0 +1,4 @@
+[submodule "elastos-wallet-core/Elastos.ELA.SPV.Cpp"]
+	path = elastos-wallet-core/Elastos.ELA.SPV.Cpp
+	url = https://github.com/elastos/Elastos.ELA.SPV.Cpp
+	branch = release_v0.3.0
